@@ -38,7 +38,7 @@ Notice that slash command is not used here because of discord not allowing Inter
 ```
 /mj_upscale [ MT : index (integer) ] [ OPT : reset_target (boolean) ]
 ```
-*index* parameter takes values from 1 to 4; 1 is the index of top left image and 4 is the index of down right one.
+*index* parameter takes values from 1 to 4; 1 is the index of top left image and 4 is the index of buttom right one.
 The optional parameter *reset_target* indicates if target you have set before should be reset at the end of current operation; if that's done and you want to upscale image from same message with different index you should use *$mj_target* command again.
 
 
