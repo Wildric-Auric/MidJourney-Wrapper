@@ -9,7 +9,7 @@ Warning though; you aren't allowed to use this software in the purpose of sharin
 * Clone the project.
 * Install [requirements](https://github.com/Wildric-Auric/MidJourney-Wrapper/blob/main/requirements.txt) (only pycord version 2)  and discord python api module if needed. 
 * Fill [Globals.py](https://github.com/Wildric-Auric/MidJourney-Wrapper/blob/main/Globals.py) with your data
-* Run main.py; the keep_alive() method is used by me to host in replit, you can remove it.
+* Run main.py;
 
 ## Implemented commands documentation
 *MT stands for mandatory*
