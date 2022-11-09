@@ -92,6 +92,7 @@ async def on_message(message):
     if "$mj_target" in message.content and message.content[0] == '$':
         try:
             Globals.targetID = str(message.reference.message_id)
+	    #Get the hash from the url
             Globals.targetHash = str((message.reference.resolved.attachments[0].url.split("_")[-1]).split(".")[0])
         except:
             await message.channel.send(
