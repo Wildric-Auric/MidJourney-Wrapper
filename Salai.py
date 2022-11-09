@@ -4,8 +4,8 @@ import requests
 def PassPromptToSelfBot(prompt : str):
     payload ={"type":2,
     "application_id":"936929561302675456",
-    "guild_id":Globals.SERVER_ID,
-    "channel_id":Globals.CHANNEL_ID,
+    "guild_id":"901101182645325865",
+    "channel_id":"999318780708671528",
     "session_id":"0a010c9eaf31b12c8b2345c0d38bbb7c",
     "data":{"version":"994261739745050686",
             "id":"938956540159881230",
@@ -34,16 +34,16 @@ def PassPromptToSelfBot(prompt : str):
 
 
 #TODO: variable guild_id and channel id
-def Upscale(index : int, messageId : str):
+def Upscale(index : int, messageId : str, messageHash : str):
     payload = {"type":3,
-    "guild_id":Globals.SERVER_ID,
-    "channel_id":Globals.CHANNEL_ID,
+    "guild_id":"901101182645325865",
+    "channel_id":"999318780708671528",
     "message_flags":0,
     "message_id": messageId,
     "application_id":"936929561302675456",
     "session_id":"45bc04dd4da37141a5f73dfbfaf5bdcf",
     "data":{"component_type":2,
-            "custom_id":"MJ::JOB::upsample::{}".format(index)}
+            "custom_id":"MJ::JOB::upsample::{}::{}".format(index, messageHash)}
         }  
     header = {
         'authorization' : Globals.SALAI_TOKEN
@@ -55,15 +55,15 @@ def Upscale(index : int, messageId : str):
 
 
 
-def MaxUpscale(messageId : str):
+def MaxUpscale(messageId : str, messageHash : str):
   payload = {"type":3,
-          "guild_id":Globals.SERVER_ID,
-          "channel_id":Globals.CHANNEL_ID,
+          "guild_id":"901101182645325865",
+          "channel_id":"999318780708671528",
              "message_flags":0,
              "message_id": messageId,
              "application_id":"936929561302675456",
              "session_id":"1f3dbdf09efdf93d81a3a6420882c92c","data": 
-       {"component_type":2,"custom_id":"MJ::JOB::upsample_max::2::SOLO"}}
+       {"component_type":2,"custom_id":"MJ::JOB::upsample_max::1::{}::SOLO".format(messageHash)}}
   header = {
         'authorization' : Globals.SALAI_TOKEN
     }
@@ -72,14 +72,14 @@ def MaxUpscale(messageId : str):
   return response
 
 
-def Variation(index : int,messageId : str):
-  payload = {"type":3, "guild_id":Globals.SERVER_ID,
-            "channel_id":Globals.CHANNEL_ID,
+def Variation(index : int,messageId : str, messageHash : str):
+  payload = {"type":3, "guild_id":"901101182645325865",
+            "channel_id":"999318780708671528",
             "message_flags":0,
             "message_id": messageId,
             "application_id": "936929561302675456",
             "session_id":"1f3dbdf09efdf93d81a3a6420882c92c",
-            "data":{"component_type":2,"custom_id":"MJ::JOB::variation::{}".format(index)}}
+            "data":{"component_type":2,"custom_id":"MJ::JOB::variation::{}::{}".format(index, messageHash)}}
   header = {
         'authorization' : Globals.SALAI_TOKEN
     }

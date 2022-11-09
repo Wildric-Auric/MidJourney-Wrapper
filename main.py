@@ -1,6 +1,5 @@
 import discord
 import Globals
-from keep_alive import keep_alive
 from Salai import PassPromptToSelfBot, Upscale, MaxUpscale, Variation
 
 bot = discord.Bot(intents=discord.Intents.all())
@@ -12,9 +11,9 @@ async def on_ready():
     print(f"Logged in as {bot.user}")
 
 
-@bot.command(description="Says hello (creative, isn't it?).")
-async def hello(ctx):
-    await ctx.respond("Hello!")
+@bot.command(description="Make DaVinci say something")
+async def hello(ctx, sentence: discord.Option(str)):
+    await ctx.respond(sentence)
 
 
 @bot.command(description="This command is a wrapper of MidJourneyAI")
@@ -39,7 +38,7 @@ async def mj_upscale(ctx, index: discord.Option(int), reset_target : discord.Opt
         )
         return
 
-    response = Upscale(index, Globals.targetID)
+    response = Upscale(index, Globals.targetID, Globals.targetHash)
     if reset_target:
         Globals.targetID = ""
     if response.status_code >= 400:
@@ -56,7 +55,7 @@ async def mj_upscale_to_max(ctx):
         )
         return
 
-    response = MaxUpscale(Globals.targetID)
+    response = MaxUpscale(Globals.targetID, Globals.targetHash)
     Globals.targetID = ""
     if response.status_code >= 400:
         await ctx.respond("Request has failed; please try later")
@@ -76,7 +75,7 @@ async def mj_variation(ctx, index: discord.Option(int), reset_target : discord.O
         )
         return
 
-    response = Variation(index, Globals.targetID)
+    response = Variation(index, Globals.targetID, Globals.targetHash)
     if reset_target:
         Globals.targetID = ""
     if response.status_code >= 400:
@@ -93,6 +92,7 @@ async def on_message(message):
     if "$mj_target" in message.content and message.content[0] == '$':
         try:
             Globals.targetID = str(message.reference.message_id)
+            Globals.targetHash = str((message.reference.resolved.attachments[0].url.split("_")[-1]).split(".")[0])
         except:
             await message.channel.send(
                 "Exception has occured, maybe you didn't reply to MidJourney message"
@@ -108,5 +108,4 @@ async def on_message(message):
         await message.delete()
 
 
-keep_alive()
 bot.run(Globals.DAVINCI_TOKEN)
