@@ -3,7 +3,6 @@ import Globals
 from Salai import PassPromptToSelfBot, Upscale, MaxUpscale, Variation
 
 bot = discord.Bot(intents=discord.Intents.all())
-#client = discord.Client(intents = discord.Intents.all())
 
 
 @bot.event
@@ -18,6 +17,10 @@ async def hello(ctx, sentence: discord.Option(str)):
 
 @bot.command(description="This command is a wrapper of MidJourneyAI")
 async def mj_imagine(ctx, prompt: discord.Option(str)):
+
+    if (Globals.USE_MESSAGED_CHANNEL):
+        Globals.CHANNEL_ID = ctx.channel.id
+
     response = PassPromptToSelfBot(prompt)
     if response.status_code >= 400:
         await ctx.respond("Request has failed; please try later")
@@ -38,6 +41,8 @@ async def mj_upscale(ctx, index: discord.Option(int), reset_target : discord.Opt
         )
         return
 
+    if (Globals.USE_MESSAGED_CHANNEL):
+          Globals.CHANNEL_ID = ctx.channel.id
     response = Upscale(index, Globals.targetID, Globals.targetHash)
     if reset_target:
         Globals.targetID = ""
@@ -54,6 +59,9 @@ async def mj_upscale_to_max(ctx):
             'You did not set target. To do so reply to targeted message with "$mj_target"'
         )
         return
+
+    if (Globals.USE_MESSAGED_CHANNEL):
+        Globals.CHANNEL_ID = ctx.channel.id
 
     response = MaxUpscale(Globals.targetID, Globals.targetHash)
     Globals.targetID = ""
@@ -75,6 +83,10 @@ async def mj_variation(ctx, index: discord.Option(int), reset_target : discord.O
         )
         return
 
+
+    if (Globals.USE_MESSAGED_CHANNEL):
+        Globals.CHANNEL_ID = ctx.channel.id
+        
     response = Variation(index, Globals.targetID, Globals.targetHash)
     if reset_target:
         Globals.targetID = ""
