@@ -22,7 +22,10 @@ async def mj_imagine(ctx, prompt: discord.Option(str)):
         Globals.CHANNEL_ID = ctx.channel.id
 
     response = PassPromptToSelfBot(prompt)
+    
     if response.status_code >= 400:
+        print(response.txt)
+        print(response.status_code)
         await ctx.respond("Request has failed; please try later")
     else:
         await ctx.respond(
